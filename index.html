@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basic Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Basic Calculator</h2>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Apartment Selector</title>
+  </head>
+  <body>
+  
+  <h2>Select Apartment Type</h2>
+  
+  <select id="operation">
+      <option value="2450">3BHK-'2450 per sqft'</option>
+      <option value="2750">3BHK + SERVANT-'2750 per sqft'</option>
+      <option value="2800">3BHK + SERVANT + STUDY ROOM -'2850 per sqft'</option>
+      <option value="2900">4BHK + SERVANT -'2900 per sqft'</option>
+      <option value="3200">4BHK + SERVANT + STUDY ROOM-'3200 per sqft'</option>
+  </select>
+  <h2>Preferred Floor Location</h2>
+  <select id="floor">
+    <option value="750">1st to 3rd Floor (₹750 per sqft)</option>
+    <option value="700">3rd to 6th Floor (₹700 per sqft)</option>
+    <option value="600">6th to 9th Floor (₹600 per sqft)</option>
+    <option value="500">9th to 12th Floor (₹500 per sqft)</option>
+    <option value="400">12th to 15th Floor (₹400 per sqft)</option>
+  </select>
+  
+  <h2>Preferred View</h2>
+<select id="View">
+    <option value="400">PARK VIEW- 400 PER SQFT</option>
+    <option value="300">HIGHWAY VIEW- 300 PER SQFT</option>
+    <option value="200">CORNER VIEW- 200 PER SQFT</option>
+    <option value="600">PARK+CORNER VIEW- 600 PER SQFT</option>
+    <option value="500">HIGHWAY+CORNER VIEW - 500 PER SQFT</option>
+</select>
+
+<h2>Parking Facility</h2>
+
+<div id="parkingOptions">
+  <label><input type="radio" name="parking" value="649000"> Parking (₹6,49,000)</label><br>
+  <label><input type="radio" name="parking" value="150000"> Open Parking (₹1,50,000)</label><br>
+  <label><input type="radio" name="parking" value="250000"> Podium Parking (₹2,50,000)</label><br>
+  <label><input type="radio" name="parking" value="0"> No Parking</label>
+</div>
+
+
+  <button onclick="calculate()">Get Value</button>
+  
+  <div class="result" id="result"></div>
+  
+  <script>
+  function calculate() {
+    const area = 7500; // Area in sqft
+
+    // Get apartment base rate
+    const baseRate = parseFloat(document.getElementById('operation').value);
+
+    // Get floor rate
+    const floorRate = parseFloat(document.getElementById('floor').value);
+
+    // Get view rate
+    const viewRate = parseFloat(document.getElementById('View').value);
+
+    // Get selected parking rate
+    const parkingRadios = document.getElementsByName('parking');
+    let parkingRate = 0;
+    for (let i = 0; i < parkingRadios.length; i++) {
+      if (parkingRadios[i].checked) {
+        parkingRate = parseFloat(parkingRadios[i].value);
+        break;
+      }
+    }
+
+    // Calculate total rate per sqft
+    const totalPerSqft = area + floorRate + viewRate +200;
+
+    // Total price before GST
+    const totalPrice = (totalPerSqft * baseRate);
+
+    // Add 5% GST
+    const finalPrice = totalPrice + (totalPrice * 0.05) + parkingRate;
+
+    // Format as Indian Rupee with commas
+    const formattedPrice = finalPrice.toLocaleString('en-IN', {
+      style: 'currency',
+      currency: 'INR'
+    });
+
+    // Show result
+    document.getElementById('result').innerText = `Total Price (including GST and miscellaneous costing(200 rupee per sqftonly)): ${formattedPrice}`;
+  }
+
+</script>
+  </body>
+  </html>
+  
